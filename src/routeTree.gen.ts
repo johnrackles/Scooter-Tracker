@@ -9,14 +9,50 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ScooterRouteRouteImport } from './routes/scooter/route'
+import { Route as ManufacturerRouteRouteImport } from './routes/manufacturer/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ScooterIndexRouteImport } from './routes/scooter/index'
+import { Route as ManufacturerIndexRouteImport } from './routes/manufacturer/index'
+import { Route as ScooterAddRouteImport } from './routes/scooter/add'
+import { Route as ScooterIdRouteImport } from './routes/scooter/$id'
 import { Route as ApiTrpcSplatRouteImport } from './routes/api.trpc.$'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
+const ScooterRouteRoute = ScooterRouteRouteImport.update({
+  id: '/scooter',
+  path: '/scooter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManufacturerRouteRoute = ManufacturerRouteRouteImport.update({
+  id: '/manufacturer',
+  path: '/manufacturer',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ScooterIndexRoute = ScooterIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ScooterRouteRoute,
+} as any)
+const ManufacturerIndexRoute = ManufacturerIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ManufacturerRouteRoute,
+} as any)
+const ScooterAddRoute = ScooterAddRouteImport.update({
+  id: '/add',
+  path: '/add',
+  getParentRoute: () => ScooterRouteRoute,
+} as any)
+const ScooterIdRoute = ScooterIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ScooterRouteRoute,
 } as any)
 const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
   id: '/api/trpc/$',
@@ -31,42 +67,128 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/manufacturer': typeof ManufacturerRouteRouteWithChildren
+  '/scooter': typeof ScooterRouteRouteWithChildren
+  '/scooter/$id': typeof ScooterIdRoute
+  '/scooter/add': typeof ScooterAddRoute
+  '/manufacturer/': typeof ManufacturerIndexRoute
+  '/scooter/': typeof ScooterIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/scooter/$id': typeof ScooterIdRoute
+  '/scooter/add': typeof ScooterAddRoute
+  '/manufacturer': typeof ManufacturerIndexRoute
+  '/scooter': typeof ScooterIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/manufacturer': typeof ManufacturerRouteRouteWithChildren
+  '/scooter': typeof ScooterRouteRouteWithChildren
+  '/scooter/$id': typeof ScooterIdRoute
+  '/scooter/add': typeof ScooterAddRoute
+  '/manufacturer/': typeof ManufacturerIndexRoute
+  '/scooter/': typeof ScooterIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/auth/$' | '/api/trpc/$'
+  fullPaths:
+    | '/'
+    | '/manufacturer'
+    | '/scooter'
+    | '/scooter/$id'
+    | '/scooter/add'
+    | '/manufacturer/'
+    | '/scooter/'
+    | '/api/auth/$'
+    | '/api/trpc/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/auth/$' | '/api/trpc/$'
-  id: '__root__' | '/' | '/api/auth/$' | '/api/trpc/$'
+  to:
+    | '/'
+    | '/scooter/$id'
+    | '/scooter/add'
+    | '/manufacturer'
+    | '/scooter'
+    | '/api/auth/$'
+    | '/api/trpc/$'
+  id:
+    | '__root__'
+    | '/'
+    | '/manufacturer'
+    | '/scooter'
+    | '/scooter/$id'
+    | '/scooter/add'
+    | '/manufacturer/'
+    | '/scooter/'
+    | '/api/auth/$'
+    | '/api/trpc/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ManufacturerRouteRoute: typeof ManufacturerRouteRouteWithChildren
+  ScooterRouteRoute: typeof ScooterRouteRouteWithChildren
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/scooter': {
+      id: '/scooter'
+      path: '/scooter'
+      fullPath: '/scooter'
+      preLoaderRoute: typeof ScooterRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/manufacturer': {
+      id: '/manufacturer'
+      path: '/manufacturer'
+      fullPath: '/manufacturer'
+      preLoaderRoute: typeof ManufacturerRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/scooter/': {
+      id: '/scooter/'
+      path: '/'
+      fullPath: '/scooter/'
+      preLoaderRoute: typeof ScooterIndexRouteImport
+      parentRoute: typeof ScooterRouteRoute
+    }
+    '/manufacturer/': {
+      id: '/manufacturer/'
+      path: '/'
+      fullPath: '/manufacturer/'
+      preLoaderRoute: typeof ManufacturerIndexRouteImport
+      parentRoute: typeof ManufacturerRouteRoute
+    }
+    '/scooter/add': {
+      id: '/scooter/add'
+      path: '/add'
+      fullPath: '/scooter/add'
+      preLoaderRoute: typeof ScooterAddRouteImport
+      parentRoute: typeof ScooterRouteRoute
+    }
+    '/scooter/$id': {
+      id: '/scooter/$id'
+      path: '/$id'
+      fullPath: '/scooter/$id'
+      preLoaderRoute: typeof ScooterIdRouteImport
+      parentRoute: typeof ScooterRouteRoute
     }
     '/api/trpc/$': {
       id: '/api/trpc/$'
@@ -85,8 +207,37 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface ManufacturerRouteRouteChildren {
+  ManufacturerIndexRoute: typeof ManufacturerIndexRoute
+}
+
+const ManufacturerRouteRouteChildren: ManufacturerRouteRouteChildren = {
+  ManufacturerIndexRoute: ManufacturerIndexRoute,
+}
+
+const ManufacturerRouteRouteWithChildren =
+  ManufacturerRouteRoute._addFileChildren(ManufacturerRouteRouteChildren)
+
+interface ScooterRouteRouteChildren {
+  ScooterIdRoute: typeof ScooterIdRoute
+  ScooterAddRoute: typeof ScooterAddRoute
+  ScooterIndexRoute: typeof ScooterIndexRoute
+}
+
+const ScooterRouteRouteChildren: ScooterRouteRouteChildren = {
+  ScooterIdRoute: ScooterIdRoute,
+  ScooterAddRoute: ScooterAddRoute,
+  ScooterIndexRoute: ScooterIndexRoute,
+}
+
+const ScooterRouteRouteWithChildren = ScooterRouteRoute._addFileChildren(
+  ScooterRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ManufacturerRouteRoute: ManufacturerRouteRouteWithChildren,
+  ScooterRouteRoute: ScooterRouteRouteWithChildren,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiTrpcSplatRoute: ApiTrpcSplatRoute,
 }

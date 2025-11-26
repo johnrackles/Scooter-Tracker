@@ -1,11 +1,10 @@
 import { SiGithub } from "@icons-pack/react-simple-icons";
 import { createAuthClient } from "better-auth/client";
-import { createAuthClient as reactClient } from "better-auth/react";
+import { useSession } from "@/lib/auth-client";
 import { Button } from "./ui/button";
 import { Spinner } from "./ui/spinner";
 
 const authClient = createAuthClient();
-const { useSession } = reactClient();
 
 export function Login() {
 	const { data: session, isPending, refetch } = useSession();

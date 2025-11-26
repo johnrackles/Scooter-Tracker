@@ -8,14 +8,18 @@ export const scooters = pgTable("scooters", {
 	ownerId: text("owner_id").notNull(),
 	manufacturerId: integer("manufacturer_id").notNull(),
 	createdAt: timestamp("created_at").defaultNow().notNull(),
-	updatedAt: timestamp("updated_at").defaultNow().notNull(),
+	updatedAt: timestamp("updated_at")
+		.$onUpdate(() => /* @__PURE__ */ new Date())
+		.notNull(),
 });
 
 export const manufacturers = pgTable("manufacturers", {
 	id: serial("id").primaryKey(),
 	name: text("name").notNull(),
 	createdAt: timestamp("created_at").defaultNow().notNull(),
-	updatedAt: timestamp("updated_at").defaultNow().notNull(),
+	updatedAt: timestamp("updated_at")
+		.$onUpdate(() => /* @__PURE__ */ new Date())
+		.notNull(),
 });
 
 export const scootersRelations = relations(scooters, ({ one }) => ({

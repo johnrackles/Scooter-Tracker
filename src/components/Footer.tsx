@@ -3,8 +3,8 @@ import { ModeToggle } from "./ThemeToggle";
 
 export function Footer() {
 	return (
-		<footer className="space-y-2 py-4 flex flex-col items-center">
-			<div className="space-x-2 flex justify-center">
+		<footer className="space-y-4 py-4 flex flex-col items-center">
+			<div className="space-x-4 flex justify-center">
 				<ModeToggle />
 				<Login />
 			</div>
