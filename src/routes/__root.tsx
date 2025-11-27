@@ -49,14 +49,14 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 			},
 		],
 	}),
-	loader: () => {
-		return { ...getThemeServerFn(), crumb: "Home" };
+	loader: async () => {
+		return { theme: await getThemeServerFn(), crumb: "Home" };
 	},
 	shellComponent: RootDocument,
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-	const theme = Route.useLoaderData();
+	const { theme } = Route.useLoaderData();
 
 	return (
 		<html className={cn(theme, "h-full")} lang="en" suppressHydrationWarning>
@@ -77,9 +77,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 								<Breadcrumbs />
 							</header>
 
-							<main className="p-4 md:p-8 flex flex-1 flex-col gap-4">
+							<div className="p-4 md:p-8 flex flex-1 flex-col gap-4">
 								{children}
-							</main>
+							</div>
 							<Footer />
 						</SidebarInset>
 					</SidebarProvider>

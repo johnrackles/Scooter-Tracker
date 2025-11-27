@@ -1,4 +1,5 @@
 import { isMatch, useMatches } from "@tanstack/react-router";
+import { Fragment } from "react/jsx-runtime";
 import {
 	Breadcrumb,
 	BreadcrumbItem,
@@ -21,8 +22,8 @@ export function Breadcrumbs() {
 		<Breadcrumb>
 			<BreadcrumbList>
 				{matchesWithCrumbs.map((match, index) => (
-					<>
-						<BreadcrumbItem key={match.to}>
+					<Fragment key={match.to}>
+						<BreadcrumbItem>
 							{index < matchesWithCrumbs.length - 1 ? (
 								<BreadcrumbLink href={match.to}>{match.label}</BreadcrumbLink>
 							) : (
@@ -30,7 +31,7 @@ export function Breadcrumbs() {
 							)}
 						</BreadcrumbItem>
 						{index < matchesWithCrumbs.length - 1 && <BreadcrumbSeparator />}
-					</>
+					</Fragment>
 				))}
 			</BreadcrumbList>
 		</Breadcrumb>

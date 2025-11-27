@@ -1,28 +1,25 @@
 import { SiGithub } from "@icons-pack/react-simple-icons";
-import { createAuthClient } from "better-auth/client";
-import { useSession } from "@/lib/auth-client";
+import { signIn, signOut, useSession } from "@/lib/auth-client";
 import { Button } from "./ui/button";
 import { Spinner } from "./ui/spinner";
 
-const authClient = createAuthClient();
-
 export function Login() {
-	const { data: session, isPending, refetch } = useSession();
+	const { isPending, refetch, data } = useSession();
 
-	const signIn = async () => {
-		await authClient.signIn.social({
+	const handleSignIn = async () => {
+		await signIn.social({
 			provider: "github",
 		});
 	};
 
-	const signOut = async () => {
-		await authClient.signOut();
+	const handleSignOut = async () => {
+		await signOut();
 		await refetch();
 	};
 
-	return session?.user ? (
+	return data?.user ? (
 		<Button
-			onClick={signOut}
+			onClick={handleSignOut}
 			type="button"
 			disabled={isPending}
 			variant="outline"
@@ -30,7 +27,7 @@ export function Login() {
 			{isPending && <Spinner />} Sign Out
 		</Button>
 	) : (
-		<Button onClick={signIn} type="button" disabled={isPending}>
+		<Button onClick={handleSignIn} type="button" disabled={isPending}>
 			{isPending ? <Spinner /> : <SiGithub />} Sign In
 		</Button>
 	);

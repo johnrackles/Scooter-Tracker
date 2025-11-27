@@ -79,7 +79,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 								{item.items.map((item) => (
 									<SidebarMenuItem key={item.title}>
 										<SidebarMenuButton asChild>
-											<Link to={item.to}>{item.title}</Link>
+											<Link to={item.to} activeOptions={{ exact: true }}>
+												{item.title}
+											</Link>
 										</SidebarMenuButton>
 									</SidebarMenuItem>
 								))}

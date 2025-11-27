@@ -1,8 +1,19 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { getUserID } from "@/lib/auth-server-func";
 
 export const Route = createFileRoute("/scooter")({
 	component: RouteComponent,
-	loader: () => ({ crumb: "Scooter" }),
+	async beforeLoad() {
+		const userID = await getUserID();
+
+		return { userID };
+	},
+	async loader({ context }) {
+		if (!context.userID) {
+			throw redirect({ to: "/" });
+		}
+		return { userID: context.userID };
+	},
 });
 
 function RouteComponent() {
