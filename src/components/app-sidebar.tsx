@@ -46,7 +46,7 @@ const data: Data = {
 			items: [
 				{
 					title: "List",
-					to: "/",
+					to: "/manufacturer",
 				},
 			],
 		},
